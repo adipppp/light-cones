@@ -7,4 +7,3 @@ class Item(models.Model):
     description = models.TextField()
     rarity = models.IntegerField()
     path = models.CharField(max_length=255)
-
