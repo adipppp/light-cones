@@ -37,7 +37,7 @@
      <br><br>
      Pertama, saya menambahkan path `add_light_cone/`, `xml/`, `json/`, `xml/<int>`, dan `json/<int>` ke `urls.py` pada direktori main. Kemudian, saya menambahkan path `/main/` ke `urls.py` pada direktori light_cones. Dengan melakukan kedua hal tersebut, path `/main/`, `/main/add_light_cone/`, `/main/xml/`, `/main/json/`, `main/xml/<int>`, `main/json/<int>` dapat diakses oleh client.
 
-<br><br>
+<br>
 
 - HTML
   <br><br>
