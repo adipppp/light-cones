@@ -26,7 +26,7 @@ def add_light_cone(request: HttpRequest):
                 return HttpResponseRedirect("/main/")
             kwargs[i[0]] = i[1]
 
-        item = Item(**kwargs)
+        item = Item.objects.create(**kwargs)
         item.save()
 
         return HttpResponseRedirect("/main/")
