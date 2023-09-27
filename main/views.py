@@ -1,48 +1,81 @@
-from django.core import serializers
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+import datetime
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
+from django.http import HttpRequest, HttpResponseRedirect, HttpResponse
+from main.forms import ItemForm
+from django.urls import reverse
 from main.models import Item
+from django.core import serializers
 
 # Create your views here.
+@login_required(login_url='/main/login')
 def show_main(request: HttpRequest):
-    light_cone_list = Item.objects.all()
+    light_cone_list = Item.objects.filter(user=request.user)
 
     context = {
-        "light_cone_list": light_cone_list
+        'light_cone_list': light_cone_list
     }
 
     return render(request, "main.html", context)
 
 def add_light_cone(request: HttpRequest):
-    if (request.method == "GET"):
-        return render(request, "add_light_cone.html")
-    elif (request.method == "POST"):
-        post_data = list(request.POST.items())
-        kwargs = {}
-        for i in post_data:
-            if i[0] == "csrfmiddlewaretoken":
-                continue
-            if i[1] == '':
-                return HttpResponseRedirect("/main/")
-            kwargs[i[0]] = i[1]
+    form = ItemForm(request.POST or None)
 
-        item = Item.objects.create(**kwargs)
-        item.save()
+    if form.is_valid() and request.method == "POST":
+        product = form.save(commit=False)
+        product.user = request.user
+        product.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
 
-        return HttpResponseRedirect("/main/")
+    context = {'form': form}
+    return render(request, "add_light_cone.html", context)
 
-def show_xml(request):
+def show_xml(request: HttpRequest):
     data = Item.objects.all()
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
-def show_json(request):
+def show_json(request: HttpRequest):
     data = Item.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
-def show_xml_by_id(request, id):
+def show_xml_by_id(request: HttpRequest, id):
     data = Item.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
-def show_json_by_id(request, id):
+def show_json_by_id(request: HttpRequest, id):
     data = Item.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def register(request: HttpRequest):
+    form = UserCreationForm()
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your account has been successfully created!')
+            return redirect('main:login')
+    context = {'form':form}
+    return render(request, 'register.html', context)
+
+def login_user(request: HttpRequest):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            response = HttpResponseRedirect(reverse("main:show_main")) 
+            response.set_cookie('last_login', str(datetime.datetime.now()))
+            return response
+    context = {}
+    return render(request, 'login.html', context)
+
+def logout_user(request: HttpRequest):
+    logout(request)
+    response = HttpResponseRedirect(reverse('main:login'))
+    response.delete_cookie('last_login')
+    return response

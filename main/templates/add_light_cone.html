@@ -1,25 +1,19 @@
-<form method="post">
-  {% csrf_token %}
+{% extends 'base.html' %} 
 
-  <label for="name">Name: </label>
-  <input type="text" id="name" name="name" />
-  <br />
+{% block content %}
+<h1>Add New Product</h1>
 
-  <label for="amount">Amount: </label>
-  <input type="number" id="amount" name="amount" />
-  <br />
-
-  <label for="rarity">Rarity: </label>
-  <input type="number" id="rarity" name="rarity" />
-  <br />
-
-  <label for="path">Path: </label>
-  <input type="text" id="path" name="path" />
-  <br />
-
-  <label for="description">Description: </label>
-  <input type="text" id="description" name="description" />
-  <br />
-
-  <input type="submit" value="Submit" />
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Add Product"/>
+            </td>
+        </tr>
+    </table>
 </form>
+
+{% endblock %}

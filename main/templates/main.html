@@ -1,18 +1,26 @@
-<h1>--- Light Cone Inventory ---</h1>
+{% extends 'base.html' %}
 
-<a href="add_light_cone/">
-  <button>Add light cone</button>
-</a>
+{% block content %}
+  <h1>--- Light Cone Inventory ---</h1>
 
-{% for light_cone in light_cone_list %}
-<h5>Name:</h5>
-<p>{{ light_cone.name }}</p>
-<h5>Amount:</h5>
-<p>{{ light_cone.amount }}</p>
-<h5>Rarity:</h5>
-<p>{{ light_cone.rarity }}</p>
-<h5>Path:</h5>
-<p>{{ light_cone.path }}</p>
-<h5>Description:</h5>
-<p>{{ light_cone.description }}</p>
-{% endfor %}
+  <a href="add_light_cone/">
+    <button>Add light cone</button>
+  </a>
+
+  {% for light_cone in light_cone_list %}
+  <h5>Name:</h5>
+  <p>{{ light_cone.name }}</p>
+  <h5>Amount:</h5>
+  <p>{{ light_cone.amount }}</p>
+  <h5>Rarity:</h5>
+  <p>{{ light_cone.rarity }}</p>
+  <h5>Path:</h5>
+  <p>{{ light_cone.path }}</p>
+  <h5>Description:</h5>
+  <p>{{ light_cone.description }}</p>
+  {% endfor %}
+
+  <a href="{% url 'main:logout' %}">
+    <button>Logout</button>
+  </a>
+{% endblock content %}
