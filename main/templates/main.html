@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>--- Light Cone Inventory ---</h1>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand me-auto mb-2 mb-lg-0" href="#">Light Cone Inventory</a>
+    <a class="nav-link active" href="logout/">Logout</a>
+  </div>
+</nav>
 
-  <a href="add_light_cone/">
-    <button>Add light cone</button>
-  </a>
-
+<div class="p-2">
   {% for light_cone in light_cone_list %}
   <h5>Name:</h5>
   <p>{{ light_cone.name }}</p>
@@ -20,7 +22,9 @@
   <p>{{ light_cone.description }}</p>
   {% endfor %}
 
-  <a href="{% url 'main:logout' %}">
-    <button>Logout</button>
+  <a href="add_light_cone/">
+    <button>Add light cone</button>
   </a>
+
+</div>
 {% endblock content %}

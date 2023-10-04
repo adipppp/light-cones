@@ -4,11 +4,17 @@
     <title>Register</title>
 {% endblock meta %}
 
-{% block content %}  
+{% block content %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand me-auto mb-2 mb-lg-0" href="#">Light Cone Inventory</a>
+    </div>
+  </nav>
 
 <div class = "login">
+    <div class="flex-table">
     
-    <h1>Register</h1>  
+        <h1>Register</h1>
 
         <form method="POST" >  
             {% csrf_token %}  
@@ -21,14 +27,29 @@
             </table>  
         </form>
 
-    {% if messages %}  
-        <ul>   
-            {% for message in messages %}  
-                <li>{{ message }}</li>  
-                {% endfor %}  
-        </ul>   
-    {% endif %}
+        {% if messages %}  
+            <ul>   
+                {% for message in messages %}  
+                    <li>{{ message }}</li>  
+                    {% endfor %}  
+            </ul>
+        {% endif %}
+    </div>
 
-</div>  
+</div>
+
+<style>
+    .flex-table {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .flex-table > * {
+        display: flex;
+        flex: 1 1 0;
+        justify-content: center;
+    }
+</style>
 
 {% endblock content %}
