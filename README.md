@@ -1,29 +1,34 @@
-- Jelaskan manfaat dari setiap element selector dan kapan waktu yang tepat untuk menggunakannya.
-  <br><br>
-  Class selector merupakan selector yang memilih seluruh element yang memiliki class tersebut pada atributnya. Class selector biasa dipakai untuk memilih beberapa element berbeda yang identik pada sebuah document HTML.
-  Di sisi lain, id selector merupakan selector yang memilih tepat satu element yang memiliki id tersebut pada atributnya. Id selector biasa dipakai untuk memilih sebuah element unik pada sebuah document HTML.
+### Jelaskan perbedaan antara asynchronous programming dengan synchronous programming.
 
-- Jelaskan HTML5 Tag yang kamu ketahui.
-  <br><br>
-  `<html>` - Berfungsi sebagai container untuk seluruh element HTML yang ada pada sebuah document.
-  <br>
-  `<head>` - Berfungsi sebuah metadata untuk sebuah document HTML.
-  <br>
-  `<body>` - Merupakan isi/konten utama pada sebuah document HTML.
-  <br>
-  `<div>` - Berfungsi untuk membagi konten pada sebuah HTML document menjadi beberapa bagian.
-  <br>
-  `<a>` - Berfungsi untuk membuat paragraph text pada sebuah document HTML.
+Pada synchronous programming, program hanya menjalankan satu thread saja dalam satu waktu sehingga flow program berjalan secara linear. Hanya ada satu siklus input-proses-output saja dalam satu waktu.
+<br><br>
+Pada asynchronous programming, program menjalankan beberapa thread sekaligus dalam satu waktu. Thread yang dijalankan umumnya tidak bergantung kepada thread lain sehingga setiap thread dapat berjalan sebelum thread lainnya selesai dijalankan. Terdapat beberapa siklus input-proses-output dalam satu waktu.
 
-- Jelaskan perbedaan antara margin dan padding
-  <br><br>
-  Padding merupakan space yang terletak antara element dan border, sedangkan margin merupakan space offset di luar border sebuah element.
+<br>
 
-- Jelaskan perbedaan antara framework CSS Tailwind dan Bootstrap. Kapan sebaiknya kita menggunakan Bootstrap daripada Tailwind, dan sebaliknya?
-  <br><br>
-  Bootstrap merupakan sebuah framework CSS yang membuat pengguna bisa memodifikasi style CSS pada element HTML hanya dengan menambahkan class tertentu saja pada sebuah element HTML, tanpa harus menulis CSS sama sekali. Tailwind memiliki fitur yang mirip dengan bootstrap, hanya saja class yang dapat ditambahkan pada element HTML lebih fleksibel daripada Bootstrap. Class tersebut umumnya memiliki nama yang sama dengan property CSS seperti background-color, sehingga Tailwind lebih terasa seperti plain CSS, hanya saja style nya langsung di-apply pada HTML.
+### Dalam penerapan JavaScript dan AJAX, terdapat penerapan paradigma event-driven programming. Jelaskan maksud dari paradigma tersebut dan sebutkan salah satu contoh penerapannya pada tugas ini.
 
-- Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
-  <br><br>
-  1. Link file CSS dan JavaScript dari Bootstrap CDN
-  2. Modifikasi template HTML yang ada dengan menambahkan class pada atribut HTML dan sedikit internal CSS
+Event-driven programming merupakan sebuah paradigma dalam pemrograman yang bergantung kepada events. Program yang menerapkan paradigma ini menunggu events dikirimkan kepada program untuk kemudian diproses dan dikirimkan kembali sebagai respons terhadap input.
+<br><br>
+Pada event-driven programming, terdapat sebuah flow utama bernama event loop. Event loop berfungsi sebagai detektor events yang dikirimkan kepada program. Ketika sebuah event masuk, event loop akan menghandle event tersebut pada thread lain sehingga pemrosesan event tersebut tidak akan memblokir jalannya event loop. Dengan demikian, event loop dapat terus mendeteksi events yang masuk sambil memproses events sebelumnya.
+
+<br>
+
+### Jelaskan penerapan asynchronous programming pada AJAX.
+
+Dengan AJAX, segala request yang dikirimkan menggunakan JavaScript tidak memblokir event loop pada sebuah website. Hal ini membuat JavaScript dapat terus menerima events dari input pengguna sehingga website terasa interaktif bagi pengguna.
+
+<br>
+
+### Pada PBP kali ini, penerapan AJAX dilakukan dengan menggunakan Fetch API daripada library jQuery. Bandingkanlah kedua teknologi tersebut dan tuliskan pendapat kamu teknologi manakah yang lebih baik untuk digunakan.
+
+Fetch API merupakan fitur native pada window yang tidak menggunakan XMLHttpRequest sehingga Fetch API akan lebih efisien dibandingkan dengan jQuery. Selain itu, Fetch API tidak menggunakan callback untuk menjalankan function setelah request tersebut selesai, tetapi menggunakan Promise sehingga fenomena "callback hell" dapat dihindari.
+
+<br>
+
+### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+
+- Ubahlah kode <i>cards</i> data item agar dapat mendukung AJAX GET.
+
+  1. Membuat sebuah view baru bernama add_item_AJAX untuk menghandle request yang masuk menggunakan AJAX.
+  2. Menambahkan beberapa function JavaScript ke `main.html` pada direktori main/templates/.

@@ -1,5 +1,7 @@
 from django.urls import path
-from main.views import add_light_cone, login_user, logout_user, register, show_main, show_json, show_json_by_id, show_xml, show_xml_by_id
+from main.views import add_light_cone, login_user, logout_user, \
+    register, show_main, show_json, show_json_by_id, show_xml, show_xml_by_id, \
+    get_item_json, add_item_ajax
 
 app_name = 'main'
 
@@ -13,4 +15,6 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('login/', login_user, name="login"),
     path('logout/', logout_user, name="logout"),
+    path('json_ajax/', get_item_json, name='get_item_json'),
+    path('add_light_cone_ajax/', add_item_ajax, name='add_item_ajax'),
 ]

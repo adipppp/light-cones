@@ -8,23 +8,135 @@
   </div>
 </nav>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Light Cone</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form id="form" onsubmit="return false;">
+                  {% csrf_token %}
+                  <div class="mb-3">
+                      <label for="name" class="col-form-label">Name:</label>
+                      <input type="text" class="form-control" id="name" name="name"></input>
+                  </div>
+                  <div class="mb-3">
+                      <label for="amount" class="col-form-label">Amount:</label>
+                      <input type="number" class="form-control" id="amount" name="amount"></input>
+                  </div>
+                  <div class="mb-3">
+                      <label for="description" class="col-form-label">Description:</label>
+                      <textarea class="form-control" id="description" name="description"></textarea>
+                  </div>
+                  <div class="mb-3">
+                      <label for="rarity" class="col-form-label">Rarity:</label>
+                      <input type="number" class="form-control" id="rarity" name="rarity"></input>
+                  </div>
+                  <div class="mb-3">
+                      <label for="path" class="col-form-label">Path:</label>
+                      <input type="text" class="form-control" id="path" name="path"></input>
+                  </div>
+              </form>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal" onclick="addLightConeAJAX()">Add Light Cone</button>
+          </div>
+      </div>
+  </div>
+</div>
+
 <div class="p-2">
-  {% for light_cone in light_cone_list %}
-  <h5>Name:</h5>
-  <p>{{ light_cone.name }}</p>
-  <h5>Amount:</h5>
-  <p>{{ light_cone.amount }}</p>
-  <h5>Rarity:</h5>
-  <p>{{ light_cone.rarity }}</p>
-  <h5>Path:</h5>
-  <p>{{ light_cone.path }}</p>
-  <h5>Description:</h5>
-  <p>{{ light_cone.description }}</p>
-  {% endfor %}
+  <table id="display-table"></table>
 
   <a href="add_light_cone/">
     <button>Add light cone</button>
   </a>
 
+  <br>
+
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Light Cone by AJAX</button>
 </div>
+
+<style>
+  table, tr > * {
+    border: 1px solid black;
+  }
+
+  table {
+    border-collapse: separate;
+    border-spacing: 4px 4px;
+  }
+
+  tr > * {
+    padding: 4px;
+  }
+</style>
+
+<script>
+  function addLightConeAJAX() {
+    const formElement = document.getElementById("form");
+
+    fetch("{% url 'main:add_item_ajax' %}", {
+      method: "POST",
+      body: new FormData(formElement)
+    }).then(displayLightCones);
+
+    formElement.reset();
+    return false;
+  }
+
+  function addTableRow(data) {
+    const displayTable = document.getElementById("display-table");
+
+    const tr = document.createElement("tr");
+
+    const nameTd = document.createElement("td");
+    const amountTd = document.createElement("td");
+    const rarityTd = document.createElement("td");
+    const pathTd = document.createElement("td");
+    const descTd = document.createElement("td");
+    
+    const name = document.createTextNode(data.name);
+    const amount = document.createTextNode(data.amount);
+    const rarity = document.createTextNode(data.rarity);
+    const path = document.createTextNode(data.path);
+    const desc = document.createTextNode(data.description);
+
+    nameTd.appendChild(name);
+    amountTd.appendChild(amount);
+    rarityTd.appendChild(rarity);
+    pathTd.appendChild(path);
+    descTd.appendChild(desc);
+
+    tr.appendChild(nameTd);
+    tr.appendChild(amountTd);
+    tr.appendChild(rarityTd);
+    tr.appendChild(pathTd);
+    tr.appendChild(descTd);
+
+    displayTable.appendChild(tr);
+  }
+
+  function displayLightCones() {
+    document.getElementById("display-table").innerHTML = "<tr>\n<th>Name</th>\n<th>Amount</th>\n<th>Rarity</th>\n<th>Path</th>\n<th>Description</th>\n</tr>";
+    getLightCones().then(results => {
+      for (let i = 0; i < results.length; i++) {
+        const fields = results[i].fields;
+        addTableRow(fields);
+      }
+    });
+  }
+  
+  async function getLightCones() {
+    const origin =  window.location.origin;
+    const response = await fetch(`${origin}/main/json_ajax/`);
+    const jsonObject = await response.json();
+    return jsonObject;
+  }
+  
+  displayLightCones();
+</script>
 {% endblock content %}

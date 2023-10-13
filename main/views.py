@@ -4,11 +4,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-from django.http import HttpRequest, HttpResponseRedirect, HttpResponse
+from django.http import HttpRequest, HttpResponse, \
+    HttpResponseRedirect, HttpResponseNotFound
 from main.forms import ItemForm
 from django.urls import reverse
 from main.models import Item
 from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 @login_required(login_url='/main/login')
@@ -79,3 +81,24 @@ def logout_user(request: HttpRequest):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+
+def get_item_json(request: HttpRequest):
+    item = Item.objects.all()
+    return HttpResponse(serializers.serialize('json', item))
+
+@csrf_exempt
+def add_item_ajax(request: HttpRequest):
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        amount = request.POST.get("amount")
+        description = request.POST.get("description")
+        rarity = request.POST.get("rarity")
+        path = request.POST.get("path")
+        user = request.user
+
+        new_item = Item(name=name, amount=amount, description=description, rarity=rarity, path=path, user=user)
+        new_item.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
