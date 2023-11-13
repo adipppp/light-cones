@@ -6,49 +6,50 @@ Stateless widget merupakan widget yang tidak akan berubah setelah di build, seda
 
 ### Sebutkan seluruh <i>widget</i> yang kamu gunakan untuk menyelesaikan tugas ini dan jelaskan fungsinya masing-masing.
 
-`StatelessWidget` - Widget yang tidak akan berubah setelah di build
-`MaterialApp`
-`Scaffold`
-`AppBar`
-`Container`
-`GridView`
-`InkWell`
-`Column`
-`Icon`
-`Text`
-`ScaffoldMessenger`
-`SnackBar`
+`StatelessWidget` - Widget yang cocok digunakan jika komposisi dari widget tersebut tidak pernah berubah jika diberikan input pengguna.
+
+`Material` - Widget yang berfungsi menampung widget lain dengan tujuan menerapkan material design system dalam menyusun UI.
+
+`MaterialApp` - Widget yang berfungsi sebagai starting point sebuah app Flutter. Seperti Material, MaterialApp juga menerapkan material design system.
+
+`Scaffold` - Widget yang memiliki fungsi serupa dengan Material, dengan perbedaan Scaffold biasanya digunakan sebagai top-level container sebuah page pada Flutter.
+
+`AppBar` - Widget yang merepresentasikan sebuah app bar pada page yang umumnya diletakkan pada Scaffold. AppBar berfungsi sebagai template yang dapat menampung widget-widget lain dengan layout yang sudah ditentukan.
+
+`Container` - Widget yang berfungsi menampung widget lain dan menyediakan berbagai fitur layout seperti menambahkan padding dan margin pada widget tersebut.
+
+`GridView` - Sebuah widget yang menampung widget-widget lain dan menyusunnya dengan layout grid.
+
+`InkWell` - Widget berbentuk persegi panjang yang merespons terhadap touch event.
+
+`Column` - Widget yang digunakan untuk menampung widget-widget lain dan menyusunnya sebagai sebuah kolom.
+
+`Icon` - Widget yang merepresentasikan sebuah icon. Widget ini menyediakan berbagai icon bawaan yang tersedia pada Flutter untuk ditampilkan.
+
+`Text` - Widget yang berfungsi menampilkan sebuah teks.
+
+`ScaffoldMessenger` - Widget yang berfungsi mengatur SnackBar dan MaterialBanner.
+
+`SnackBar` - Sebuah banner yang dapat dimunculkan pada bagian bawah layar.
 
 <br>
 
 ### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
 
-- Ubahlah kode <i>cards</i> data item agar dapat mendukung AJAX GET.
-  1. Membuat sebuah view baru bernama `get_item_json` untuk menghandle GET request yang masuk dan mengirimkan JSON
-  sebagai response
-  2. Menambahkan function `displayLightCones` ke dalam main.html pada direktori main/templates
-  3. Mengganti fitur for loop Django pada main.html menjadi sebuah table kosong dengan id `display-table`
+- Membuat sebuah program Flutter baru dengan tema inventory seperti tugas-tugas sebelumnya.
 
-- Lakukan pengambilan task menggunakan AJAX GET
-  1. Memanggil `displayLightCones` setiap halaman di-load
+  1. Menjalankan `flutter create light_cones_mobile`
+  2. Mengubah current working directory ke `light_cones_mobile`
 
-- Buatlah sebuah tombol yang membuka sebuah modal dengan form untuk menambahkan item.
-  1. Menambahkan kode HTML modal ke dalam `main.html` pada direktori main/templates
-  2. Menambahkan button yang berfungsi untuk menampilkan modal pada `main.html`
+- Membuat tombol sederhana dengan ikon dan teks untuk melihat daftar item
 
-- Buatlah fungsi view baru untuk menambahkan item baru ke dalam basis data.
-  1. Membuat sebuah function bernama `add_item_ajax` pada views.py untuk menghandle POST request yang masuk menggunakan AJAX
+  1. Membuat class `MenuButton` dengan property `iconData` dan `text`
+  2. Menambahkan `InkWell` yang mempunyai children `Icon` dan `Text` yang bertuliskan "Lihat Item" pada method build dari `MenuButton`
 
-- Buatlah path `/create-ajax/` yang mengarah ke fungsi view yang baru kamu buat.
-  1. Menambahkan route url baru berupa `/main/add_light_cone_ajax/` pada urls.py yang berfungsi memanggil view `add_item_ajax`
+- Membuat tombol sederhana dengan ikon dan teks untuk menambah item
 
-- Hubungkan form yang telah kamu buat di dalam modal kamu ke path `/create-ajax/`.
-  1. Menambahkan beberapa function JavaScript ke dalam `main.html` pada direktori main/templates/
-  2. Menambahkan click listener pada button untuk mengumpulkan hasil modal dengan function `addLightConeAJAX` melalui POST request
+  1. Menambahkan `InkWell` yang mempunyai children `Icon` dan `Text` yang bertuliskan "Tambah Item" pada method build dari `MenuButton`
 
-- Lakukan refresh pada halaman utama secara asinkronus untuk menampilkan daftar item terbaru tanpa reload halaman utama secara keseluruhan.
-  1. Memanggil function `displayLightCones` untuk mengupdate table yang berisi list light cone yang ada setelah memanggil function `addLightConeAJAX`
+- Membuat tombol sederhana dengan ikon dan teks untuk logout
 
-- Melakukan perintah collectstatic.
-  1. Membuat sebuah direktori baru pada root direktori bernama `static/`
-  2. Menambahkan line `STATIC_ROOT = os.path.join(BASE_DIR, 'static')` pada settings.py
+  1. Menambahkan `InkWell` yang mempunyai children `Icon` dan `Text` yang bertuliskan "Logout" pada method build dari `MenuButton`
