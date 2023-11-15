@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:light_cones_mobile/form.dart';
+import 'package:light_cones_mobile/left_drawer.dart';
 
 class MainMenu extends StatelessWidget {
   const MainMenu({super.key});
@@ -7,6 +9,7 @@ class MainMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Tugas 7 PBP')),
+      drawer: const LeftDrawer(),
       body: Container(
         margin: const EdgeInsets.all(32.0),
         child: GridView.count(
@@ -51,6 +54,13 @@ class MenuButton extends StatelessWidget {
           ],
         ),
         onTap: () {
+          if (text == "Tambah Item") {
+            Navigator.push(
+              context, MaterialPageRoute(
+                builder: (context) => const FormPage(),
+              )
+            );
+          }
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               duration: const Duration(seconds: 2),
